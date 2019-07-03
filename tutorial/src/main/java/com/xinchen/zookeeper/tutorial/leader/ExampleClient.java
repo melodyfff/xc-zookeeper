@@ -44,12 +44,13 @@ public class ExampleClient extends LeaderSelectorListenerAdapter implements Clos
     @Override
     public void takeLeadership(CuratorFramework curatorFramework) throws Exception {
         // 现在是leader,在放弃(relinquishing)领导权前不返还
-        final int waitSeconds = (int)((5 * Math.random()) + 1);
-        log.info("{} is now the leader. Waiting {} seconds...",name);
-        log.info("{} has been leader {} time(s) before.",name,leaderCount);
+        final int waitSeconds = (int)(5 * Math.random()) + 1;
+        log.info("{} is now the leader. Waiting {} seconds...",name,waitSeconds);
+        log.info("{} has been leader {} time(s) before.",name,leaderCount.getAndIncrement());
 
         try {
-            Thread.sleep(TimeUnit.SECONDS.toSeconds(waitSeconds));
+            // 模拟执行leadership,等待随机秒
+            Thread.sleep(TimeUnit.SECONDS.toMillis(waitSeconds));
         } catch (InterruptedException e){
             log.error("{} was interrupted.",name);
             // 关闭线程
