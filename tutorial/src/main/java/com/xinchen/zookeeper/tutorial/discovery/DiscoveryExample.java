@@ -105,6 +105,7 @@ public class DiscoveryExample {
                 String operation = parts[0];
                 String[] args = Arrays.copyOfRange(parts, 1, parts.length);
 
+                // 指令合集
                 if ("help".equalsIgnoreCase(operation) || "?".equalsIgnoreCase(operation)) {
                     printHelp();
                 } else if ("q".equalsIgnoreCase(operation) || "quit".equalsIgnoreCase(operation)) {
@@ -115,7 +116,7 @@ public class DiscoveryExample {
                     deleteInstance(args, command, servers);
                 } else if ("random".equals(operation)) {
                     listRandomInstance(args, serviceDiscovery, providers, command);
-                } else if ("list".equals(operation)) {
+                } else if ("list".equals(operation) || "ls".equals(operation)) {
                     listInstances(serviceDiscovery);
                 }
 
