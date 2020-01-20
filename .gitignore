@@ -4,6 +4,6 @@
 target
 *.iml
 
-tutorial/.idea
-tutorial/target
-tutorial/*.iml
+**/.idea
+**/target
+**/*.iml

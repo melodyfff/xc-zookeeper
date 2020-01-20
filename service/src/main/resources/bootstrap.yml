@@ -1,0 +1,16 @@
+server:
+  port: 8871
+
+spring:
+  application:
+    name: xc-zookeeper-services # 服务提供
+
+  cloud:
+    zookeeper:
+      connect-string: 127.0.0.1:2181
+      discovery:
+        enabled: true
+        register: true
+        root: /services # 服务根目录
+        # instance-id: xc-zookeeper-1 指定在zk中的唯一id,未配置则自动生成如: 7e3a3014-ae49-4fc7-b077-5da1ddb58d37
+
