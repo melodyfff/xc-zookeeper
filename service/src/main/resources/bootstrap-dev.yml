@@ -22,6 +22,8 @@ spring:
         register: true
         root: /services # 服务根目录
         # instance-id: xc-zookeeper-1 指定在zk中的唯一id,未配置则自动生成如: 7e3a3014-ae49-4fc7-b077-5da1ddb58d37
+        # dependency-names:  https://cloud.spring.io/spring-cloud-zookeeper/reference/html/#spring-cloud-zookeeper-dependencies
+
     loadbalancer:
       ribbon:
         enabled: false # 默认是true ,默认线性访问,如果打开,同时启动两个服务的时候,curl去访问,则会发现会顺序调用,负载均衡

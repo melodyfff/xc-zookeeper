@@ -1,0 +1,49 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: xc-zookeeper-gateway # 服务提供
+
+  cloud:
+    gateway:
+      routes:
+      - id: home
+        # lb代表从注册中心获取服务
+        uri: lb://xc-zookeeper-client
+        predicates:
+          # 转发对外的路径,即: curl http://localhost:8080/hello 实际访问的是内部lb://xc-zookeeper-client/获取的服务
+          - Path=/
+      - id: client
+        # lb代表从注册中心获取服务
+        uri: lb://xc-zookeeper-client
+        predicates:
+          # 转发对外的路径,即: curl http://localhost:8080/hello 实际访问的是内部lb://xc-zookeeper-client/获取的服务
+          - Path=/client
+        filters:
+          # 注意,这个地方是去除前缀,否则会带上/hello去访问注册中心的服务
+          - StripPrefix=1
+      - id: service
+        # lb代表从注册中心获取服务
+        uri: lb://xc-zookeeper-services
+        predicates:
+          # 转发对外的路径,即: curl http://localhost:8080/service/greeting 实际访问的是内部lb://xc-zookeeper-services/获取的服务
+          - Path=/service/**
+        filters:
+          # 注意,这个地方是去除前缀,否则会带上/hello去访问注册中心的服务
+          - StripPrefix=1
+
+    zookeeper:
+      connect-string: 127.0.0.1:2181
+      discovery:
+        enabled: true
+        register: true
+        root: /services # 服务根目录
+        # instance-id: xc-zookeeper-1 指定在zk中的唯一id,未配置则自动生成如: 7e3a3014-ae49-4fc7-b077-5da1ddb58d37
+    loadbalancer:
+      ribbon:
+        enabled: false # 默认是true ,默认线性访问,如果打开,同时启动两个服务的时候,curl去访问,则会发现会顺序调用,负载均衡
+        # 如果设置为false 则使用spring-cloud-loadbalancer的BlockingLoadBalancerClient替代
+      cache:
+        caffeine:
+          spec: initialCapacity=50,maximumSize=500,expireAfterWrite=10s
