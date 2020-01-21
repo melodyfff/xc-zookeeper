@@ -7,9 +7,9 @@
         <artifactId>xc-zookeeper</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>spring-cloud-zookeeper-config</artifactId>
+    <artifactId>config</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>config</name>
+    <name>spring-cloud-zookeeper-config</name>
     <description>Demo project for spring cloud zookeeper config</description>
 
     <properties>
