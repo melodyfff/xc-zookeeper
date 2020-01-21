@@ -1,0 +1,22 @@
+# 前置操作
+# zk中 create /config/xc-zookeeper-config,dev/hello.message "Hello World from dev profile"
+#      create /config/xc-zookeeper-config,test/hello.message "Hello World from dev profile"
+server:
+  port: 8888
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: xc-zookeeper-config # 配置中心
+
+  cloud:
+    zookeeper:
+      config:
+        enable: true
+        defaultContext: application # 配置文件名称,默认为application ZookeeperPropertySource {name='config/application'}]
+        root: config # 默认路径config
+        watcher: false # 监控zookeeper的配置变更 经过测试,即使设置为false也可以立即更新
+        profileSeparator: "," # 分割符号 命名规则:/config/{application-name},{profile} 栗子: /config/xc-zookeeper-config,dev /config/xc-zookeeper-config,test
+                              # PS: 配置是需要建立在/config/xc-zookeeper-config,dev目录下的,如 在zk中操作 create /config/xc-zookeeper-config,dev/hello.message "Hello World from dev profile"
+      connect-string: 127.0.0.1:2181

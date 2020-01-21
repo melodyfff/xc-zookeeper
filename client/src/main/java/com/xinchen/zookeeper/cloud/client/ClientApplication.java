@@ -8,10 +8,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableHystrix
 @EnableFeignClients
 @SpringBootApplication
-public class SpringCloudZookeeperClientApplication {
+public class ClientApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringCloudZookeeperClientApplication.class, args);
+        SpringApplication.run(ClientApplication.class, args);
     }
 
 }

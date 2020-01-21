@@ -20,12 +20,14 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <curator.version>4.2.0</curator.version>
+        <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
     </properties>
 
     <modules>
         <module>tutorial</module>
         <module>service</module>
         <module>client</module>
+        <module>config</module>
     </modules>
 
     <dependencies>
@@ -53,6 +55,13 @@
                 <groupId>org.apache.curator</groupId>
                 <artifactId>apache-curator</artifactId>
                 <version>${curator.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
