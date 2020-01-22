@@ -21,6 +21,7 @@ Zookeeper Tutorial Base On Curator
 - client : 消费者,Fegin
 - config : 配置中心
 - gateway : 网关服务
+- zuul : 网关服务zuul
 ``` 
 
 需要提前在`zk`中执行初始化命令

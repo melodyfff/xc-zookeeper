@@ -1,0 +1,65 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: xc-zookeeper-zuul
+  cloud:
+    zookeeper:
+      enabled: true
+      connect-string: 127.0.0.1:2181
+      discovery:
+        register: true
+        enabled: true
+      max-retries: 3
+    loadbalancer:
+      ribbon:
+        enabled: true # 默认开启 Cause RibbonLoadBalancerClient be used by default
+zuul:
+  # zuul默认过滤了所有的http header，这代表被代理的微服务将没有任何请求头 , 为空则可放行所有请求头
+  sensitive-headers:
+
+  host:
+    # 以下均为默认值
+    socket-timeout-millis: 10000 # socket  连接超时 ms
+    connect-timeout-millis: 2000 # connect 连接超时 ms
+    time-unit: milliseconds
+    time-to-live: -1 # 连接池中的存活时间
+    connection-request-timeout-millis: -1
+    max-per-route-connections: 20 # 每个路由的最大连着数
+    max-total-connections: 200 # 路由最大连接数
+
+  servlet-path: /zuul
+
+  ignored-patterns: {"/this/is/test1/**","/this/**/test1"} # 对某些url设置不经过路由
+  ignore-local-service: true # 忽略本地service
+  ignored-services: "test*" # 对某些服务不自动创建路由规则
+  routes:
+    test:
+      path: /greeting
+      serviceId: xc-zookeeper-services
+
+    client:
+      path: /
+      serviceId: xc-zookeeper-client
+
+
+# zuul的默认路由转发超时时间只有2s，因为它内部使用ribbon作负载均衡处理，所以我们需要配置ribbon的超时时间
+ribbon:
+  # 该参数用来设置路由转发请求的时候，创建请求连接的超时时间。
+  ConnectTimeout: 500
+  # 该参数用来设置路由转发请求的超时时间。
+  ReadTimeout: 2000
+  # 最大自动重试次数
+  MaxAutoRetries: 1
+  # 最大自动重试下一个服务的次数
+  MaxAutoRetriesNextServer: 1
+
+# 该参数可以用来设置 API 网关中路由转发请求的 HystrixCommand 执行超时时间，单位为毫秒。
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutinMilliseconds: 5000
