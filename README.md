@@ -15,6 +15,9 @@ Zookeeper Tutorial Base On Curator
 
 本次使用`Curator-4.2.*`针对`zookeeper-3.5.*`版本
 
+###tutorial-zookeeper-client
+官网资料： https://github.com/apache/zookeeper/tree/branch-3.4.14/zookeeper-docs/src/main/resources/markdown
+
 ---
 
 ## Cloud List

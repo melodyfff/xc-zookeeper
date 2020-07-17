@@ -19,6 +19,7 @@
 
     <modules>
         <module>tutorial-curator</module>
+        <module>tutorial-zookeeper-client</module>
     </modules>
 
     <dependencies>
