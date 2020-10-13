@@ -1,4 +1,4 @@
-package com.xinchen.zookeeper;
+package com.xinchen.zookeeper.example.sync;
 
 import java.io.IOException;
 import java.net.InetAddress;
