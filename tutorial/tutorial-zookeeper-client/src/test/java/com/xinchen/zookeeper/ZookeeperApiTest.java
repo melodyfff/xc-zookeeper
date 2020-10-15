@@ -1,8 +1,6 @@
 package com.xinchen.zookeeper;
 
-import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
-import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
 import org.junit.Test;
 
@@ -37,9 +35,19 @@ public class ZookeeperApiTest {
     @Test
     public void create() throws KeeperException, InterruptedException {
         if (!client.exists(ROOT_PATH)){
-            client.create(ROOT_PATH, MOCK_DATA, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-            client.create(ROOT_PATH+"/ok", MOCK_DATA, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+            client.create(ROOT_PATH, MOCK_DATA);
+            client.create(ROOT_PATH+"/ok", MOCK_DATA);
         }
+    }
+
+    @Test
+    public void createSequence() throws KeeperException, InterruptedException {
+        client.createSequence(ROOT_PATH, MOCK_DATA);
+    }
+
+    @Test
+    public void createEphemeral() throws KeeperException, InterruptedException {
+        client.createEphemeral(ROOT_PATH+"/tmp111", MOCK_DATA);
     }
 
     @Test

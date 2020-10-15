@@ -2,8 +2,8 @@ package com.xinchen.zookeeper;
 
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
-import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 
 import java.util.List;
@@ -25,9 +25,35 @@ public class ZookeeperApiClient implements ZookeeperApi {
     }
 
     @Override
-    public void create(String path, byte data[], List<ACL> acl, CreateMode createMode) throws KeeperException, InterruptedException {
-        zooKeeper.create(path, data, acl, createMode);
+    public void create(String path, byte[] data) throws KeeperException, InterruptedException {
+        zooKeeper.create(path, data, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
     }
+
+    @Override
+    public void create(String path, byte[] data,Stat stat) throws KeeperException, InterruptedException {
+        zooKeeper.create(path, data, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT,stat);
+    }
+
+    @Override
+    public void create(String path, byte[] data, Stat stat, long ttl) throws KeeperException, InterruptedException {
+        zooKeeper.create(path, data, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT_WITH_TTL,stat,ttl);
+    }
+
+    @Override
+    public void createSequence(String path, byte[] data) throws KeeperException, InterruptedException {
+        zooKeeper.create(path,data,ZooDefs.Ids.OPEN_ACL_UNSAFE,CreateMode.PERSISTENT_SEQUENTIAL);
+    }
+
+    @Override
+    public void createEphemeral(String path, byte[] data) throws KeeperException, InterruptedException {
+        zooKeeper.create(path, data, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+    }
+
+    @Override
+    public void createEphemeralSequence(String path, byte[] data) throws KeeperException, InterruptedException {
+        zooKeeper.create(path, data, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
+    }
+
 
     @Override
     public void delete(String path) throws KeeperException, InterruptedException {

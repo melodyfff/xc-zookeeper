@@ -2,8 +2,10 @@ package com.xinchen.zookeeper;
 
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
+import org.apache.zookeeper.server.EphemeralType;
 
 import java.util.List;
 
@@ -86,7 +88,54 @@ import java.util.List;
  * @date 13/10/2020 09:46
  */
 public interface ZookeeperApi {
-    void create(String path, byte data[], List<ACL> acl, CreateMode createMode) throws KeeperException, InterruptedException;
+    /**
+     * create znode , default acl: {@link ZooDefs.Ids#OPEN_ACL_UNSAFE} , createMode: {@link CreateMode#PERSISTENT}
+     *
+     * @param path znode path
+     * @param data the initial data for the node
+     * @throws KeeperException KeeperException
+     * @throws InterruptedException InterruptedException
+     */
+    void create(String path, byte[] data) throws KeeperException, InterruptedException;
+
+    /**
+     * create znode , default acl: {@link ZooDefs.Ids#OPEN_ACL_UNSAFE} , createMode: {@link CreateMode#PERSISTENT}
+     *
+     * @param path The path for the node
+     * @param data The initial data for the node
+     * @param stat The output Stat object
+     * @throws KeeperException KeeperException
+     * @throws InterruptedException InterruptedException
+     */
+    void create(String path, byte[] data,Stat stat) throws KeeperException, InterruptedException;
+
+    /**
+     *
+     *
+     *
+     * create znode , default acl: {@link ZooDefs.Ids#OPEN_ACL_UNSAFE} , createMode: {@link CreateMode#PERSISTENT}
+     *
+     * mode is {@link CreateMode#PERSISTENT_WITH_TTL} or {@link CreateMode#PERSISTENT_SEQUENTIAL_WITH_TTL}
+     *
+     * If the znode has not been modified , within the given TTL, it will be deleted once it has no children.
+     *
+     * @param path The path for the node
+     * @param data The initial data for the node
+     * @param stat The output Stat object
+     * @param ttl  The TTL unit is milliseconds and must be greater than 0 and less than or equal to {@link EphemeralType#maxValue()} for {@link EphemeralType#TTL}.
+     *             '-1' never time out.
+     *
+     * version > 3.4.x
+     * @throws KeeperException KeeperException
+     * @throws InterruptedException InterruptedException
+     */
+    void create(String path, byte[] data,Stat stat,long ttl) throws KeeperException, InterruptedException;
+
+    void createSequence(String path, byte[] data) throws KeeperException, InterruptedException;
+
+    void createEphemeral(String path, byte[] data) throws KeeperException, InterruptedException;
+
+    void createEphemeralSequence(String path, byte[] data) throws KeeperException, InterruptedException;
 
     void delete(String path) throws KeeperException, InterruptedException;
 
