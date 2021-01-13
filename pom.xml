@@ -24,6 +24,7 @@
     <modules>
         <module>tutorial</module>
         <module>cloud</module>
+        <module>embedded-zookeeper</module>
     </modules>
 
     <dependencies>
@@ -33,7 +34,5 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
-
-
 
 </project>
